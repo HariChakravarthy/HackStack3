@@ -78,7 +78,7 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-      Navigator.pop(context);
+      Navigator.of(context).popUntil((route) => route.isFirst);
     } catch (e) {
       Fluttertoast.showToast(
         msg: "Error uploading blog: $e",

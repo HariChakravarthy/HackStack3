@@ -19,15 +19,17 @@ class _EditBlogScreenState extends State<EditBlogScreen> {
   late TextEditingController contentController;
   late String selectedCategory;
 
-  final List<String> categories = ['work', 'study', 'fitness', 'coding', 'to-do', 'Other'];
+  final List<String> categories = [ 'News', 'Politics', 'Business', 'Movies', 'Cricket', 'Technology', 'Economics', 'other'];
 
   final Map<String, IconData> _categoryIcons = {
-    'work': Icons.work,
-    'study': Icons.book,
-    'fitness': Icons.fitness_center,
-    'coding': Icons.code,
-    'to-do': Icons.check_circle,
-    'Other': Icons.star,
+    'News': Icons.newspaper,
+    'Politics': Icons.how_to_vote,
+    'Business': Icons.business_center,
+    'Movies': Icons.movie,
+    'Cricket': Icons.sports_cricket,
+    'Technology': Icons.devices,
+    'Economics': Icons.bar_chart,
+    'other': Icons.more_horiz,
   };
 
   Color selectedTextColor = Colors.white;
@@ -37,8 +39,13 @@ class _EditBlogScreenState extends State<EditBlogScreen> {
     super.initState();
     titleController = TextEditingController(text: widget.existingBlog.title);
     contentController = TextEditingController(text: widget.existingBlog.content);
-    selectedCategory = widget.existingBlog.category;
+
+
+    selectedCategory = categories.contains(widget.existingBlog.category)
+        ? widget.existingBlog.category
+        : categories.first;
   }
+
 
   Widget colorCircle(Color color) {
     return Container(

@@ -153,9 +153,6 @@ class _BlogTileState extends State<BlogTile> {
                       child: Text(
                         blog['authorName'],
                         style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        softWrap: false,
                       ),
                     ),
                     const SizedBox(width: 10),
