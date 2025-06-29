@@ -141,7 +141,7 @@ class _BlogTileState extends State<BlogTile> {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    /*GestureDetector(
+                    GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
@@ -156,25 +156,6 @@ class _BlogTileState extends State<BlogTile> {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         softWrap: false,
-                      ),
-                    ),*/
-                    Flexible(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => FollowingScreen(userId: blog['authorId']),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          blog['authorName'],
-                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          softWrap: false,
-                        ),
                       ),
                     ),
                     const SizedBox(width: 10),
