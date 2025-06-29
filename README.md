@@ -45,5 +45,3 @@ https://github.com/user-attachments/assets/5cb833db-ceeb-4d8c-8fe8-f409f110672a
 https://github.com/user-attachments/assets/d58ae503-3b43-4499-a4c2-6b6cce3beeba
 
 https://github.com/user-attachments/assets/cce4fc74-729f-4aac-924d-1ffadcdca395
-
-https://github.com/user-attachments/assets/a1e52e14-0b55-4892-a453-4016a7de309a
