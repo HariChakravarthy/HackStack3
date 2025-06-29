@@ -18,6 +18,34 @@ samples, guidance on mobile development, and a full API reference.
 
 * This week 4's task look like A complete UI/UX project *
 
+* Let me consider this as a complete UI/UX project that is the redesign of an app “Blogs”,
+ coming to the ground research 
+Taking Persona Hari 
+He said,
+The current version of the app  doesn’t has Google sign in feature, 
+No Bookmark feature (helps to save and read later)
+No User search facility except blogs 
+No filtering of blog types 
+Unable to show the other user’s profile and details (helps to decide how good a blogger is based on their followers ) 
+So now our app does all the things he want 
+•	Title : “way2Blogs” Sign up and log in using Firebase Authentication
+•	✅ Can Create, edit, delete, and view blog posts
+•	✅ Can Like and comment on blog posts
+•	✅ Can Follow/unfollow other users and can search users
+•	✅ View blog posts in three sections: 
+o	Explore: Shows all public posts
+o	Following: Shows posts from followed users
+o	Filters blogs on topics : Shows posts from all users
+o	Bookmark : Can bookmark the blog if wants  to read it later
+•	✅ View user profiles with: 
+o	Profile picture (cached from the web)
+o	Followers and following count
+o	User's own blogs
+•	Overview of Your Firestore Schemas (users, blogs, comments)
+Coming to this part I have used the collections in my service function same as given in the week task description 
+Like user with username , profile pic, email, followers,following and liked to the blogs with blogId and made collections of comments as a sub collection of blogs with Ids 
+
+
 ![Image](https://github.com/user-attachments/assets/cc44c350-f221-4f6d-a014-d1ca1e5e3af2)
 
 ![Image](https://github.com/user-attachments/assets/6c98770e-a610-45c3-b14e-4ee065cb37d2)
