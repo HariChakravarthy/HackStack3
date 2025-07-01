@@ -22,7 +22,8 @@ samples, guidance on mobile development, and a full API reference.
  coming to the ground research 
 * Taking Persona Hari 
 * He said,
-* The current version of the app  doesn’t has Google sign in feature, 
+* The current version of the app  doesn’t has Google sign in feature,
+* No way to filter the blogs of  follwed users and all the users .
 * No Bookmark feature (helps to save and read later)
 * No User search facility except blogs 
 * No filtering of blog types 
@@ -33,8 +34,8 @@ samples, guidance on mobile development, and a full API reference.
 * 	✅ Can Like and comment on blog posts
   *	✅ Can Follow/unfollow other users and can search users
 * 	✅ View blog posts in three sections: 
-  *  Explore: Shows all public posts
-	* Following: Shows posts from followed users
+  *  Explore: Shows all public posts in explore screen. 
+	* Following: Shows posts from followed users in Home screen like a complete social media app.
 * Filters blogs on topics : Shows posts from all users
 	* Bookmark : Can bookmark the blog if wants  to read it later
 * ✅ View user profiles with:
@@ -55,7 +56,6 @@ samples, guidance on mobile development, and a full API reference.
 ![Image](https://github.com/user-attachments/assets/00f294cd-7874-4413-9e89-b7340d1c74d9)
 
 ![Image](https://github.com/user-attachments/assets/5a996c05-8d16-490f-a977-1de3630c8d23)
-
 
 ![Image](https://github.com/user-attachments/assets/0f81d80a-574c-44d4-b9e5-c7349ac566df)
 
