@@ -8,11 +8,9 @@ import 'package:my_blog_app/services/auth_service.dart';
 
 const Color veryLightBeige = Color(0xFFE8E8DC);
 
-
-
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
-  LoginPage({super.key, required this.onTap});
+  const LoginPage({super.key, required this.onTap});
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -46,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
         MaterialPageRoute(builder: (context) => HomePage()),
       );
     }
-    on FirebaseAuthException catch (e) {
+    on FirebaseAuthException {
       Navigator.pop(context);
       showErrorMessage('Incorrect Password or Email');
     }

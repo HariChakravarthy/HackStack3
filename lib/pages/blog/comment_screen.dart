@@ -13,10 +13,10 @@ class CommentScreen extends StatefulWidget {
   final String blogAuthorId;
 
   const CommentScreen({
-    Key? key,
+    super.key,
     required this.blogId,
     required this.blogAuthorId,
-  }) : super(key: key);
+  });
 
   @override
   State<CommentScreen> createState() => _CommentScreenState();
@@ -37,16 +37,10 @@ class _CommentScreenState extends State<CommentScreen> {
     commentController.clear();
   }
 
-  Future<UserModel?> getUser(String userId) async {
-    final doc = await UserService().getUserProfile(userId);
-    if (!doc.exists) return null;
-    return UserModel.fromMap(doc.data() as Map<String, dynamic>);
-  }
-
   Widget buildCommentTile(DocumentSnapshot doc) {
     final comment = CommentModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
     return FutureBuilder<UserModel?>(
-      future: getUser(comment.commenterId),
+      future: UserService().getUserProfileOnce(comment.commenterId),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return const SizedBox();
         final user = snapshot.data!;
@@ -134,7 +128,6 @@ class _CommentScreenState extends State<CommentScreen> {
               builder: (context, snapshot) {
                 if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
                 final commentDocs = snapshot.data!.docs;
-
                 return ListView.builder(
                   itemCount: commentDocs.length,
                   itemBuilder: (context, index) => buildCommentTile(commentDocs[index]),
@@ -188,4 +181,15 @@ class _CommentScreenState extends State<CommentScreen> {
     );
   }
 }
+
+/*Future<UserModel?> getUser(String userId) async {
+    final doc = await UserService().getUserProfile(userId);
+    if (!doc.exists) return null;
+    return UserModel.fromMap(doc.data() as Map<String, dynamic>);
+  }*/
+
+/*Future<UserModel?> getUser(String userId) {
+    return UserService().getUserProfileOnce(userId);
+  }*/
+
 

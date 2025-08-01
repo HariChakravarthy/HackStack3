@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_blog_app/services/book_mark_service.dart';
+import 'package:my_blog_app/services/user_service.dart';
 import 'package:my_blog_app/pages/blog/blog_tile.dart';
 
 class BookmarkScreen extends StatelessWidget {
@@ -25,8 +25,8 @@ class BookmarkScreen extends StatelessWidget {
                    Divider(thickness: 2, color: Colors.blue[900]),
               const SizedBox(height: 10),
                 Expanded(
-                 child: StreamBuilder<List<String>>(
-          stream: BookmarkService().getUserBookmarksStream(),
+                 child: FutureBuilder<List<String>>(
+          future: UserService().getUserBookmarks(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) return const CircularProgressIndicator();
 

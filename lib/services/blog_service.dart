@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:my_blog_app/models/blog_model.dart';
 
 class BlogService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -12,14 +13,22 @@ class BlogService {
     blogData['authorId'] = uid;
     blogData['timestamp'] = FieldValue.serverTimestamp();
 
-    final blogId = _firestore.collection('blogs').doc().id;
+    final blogId = _firestore
+        .collection('blogs')
+        .doc().id;
     blogData['blogId'] = blogId;
 
     //  Add blog to global 'blogs' collection
-    await _firestore.collection('blogs').doc(blogId).set(blogData);
+    await _firestore
+        .collection('blogs')
+        .doc(blogId)
+        .set(blogData);
 
     // Update user's document to include blogId
-    await _firestore.collection('users').doc(uid).update({
+    await _firestore
+        .collection('users')
+        .doc(uid)
+        .update({
       'blogs': FieldValue.arrayUnion([blogId])
     });
   }
@@ -61,7 +70,9 @@ class BlogService {
   // Toggle like on a blog
   // ensures all logged in users to like the blog
   Future<void> toggleLike(String blogId, bool isLiked) async {
-    final docRef = _firestore.collection('blogs').doc(blogId);
+    final docRef = _firestore
+        .collection('blogs')
+        .doc(blogId);
     try {
       final docSnap = await docRef.get();
 
@@ -88,12 +99,42 @@ class BlogService {
     }
   }
 
+  Future<BlogModel?> getBlogOnce(String blogId) async {
+    final doc = await _firestore.collection('blogs').doc(blogId).get();
+    if (doc.exists) {
+      return BlogModel.fromMap(doc.data()!, doc.id);
+    } else {
+      return null;
+    }
+  }
 
-  // Get single blog details
-  Future<DocumentSnapshot> getBlog(String blogId) async {
+  Stream<BlogModel?> getBlogStream(String blogId) {
+    return _firestore.collection('blogs').doc(blogId).snapshots().map((doc) {
+      if (doc.exists) {
+        return BlogModel.fromMap(doc.data()!, doc.id);
+      } else {
+        return null;
+      }
+    });
+  }
+
+  Future<void> toggleBookmark(String blogId, bool isBookmarked) async {
+    final userDoc = _firestore.collection('users').doc(uid);
+
+    await userDoc.update({
+      'bookmarks': isBookmarked
+          ? FieldValue.arrayRemove([blogId])
+          : FieldValue.arrayUnion([blogId])
+    });
+  }
+
+}
+
+// Get single blog details
+/*Future<DocumentSnapshot> getBlog(String blogId) async {
     return await _firestore
         .collection('blogs')
         .doc(blogId)
         .get();
-  }
-}
+  }*/
+

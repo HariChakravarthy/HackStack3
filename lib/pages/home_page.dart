@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
             const Text("blogs", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
           ],
         ),
-        actions: _getAppBarActions(currentIndex),
+        actions: getAppBarActions(currentIndex),
       ),
       body: SafeArea(child: screens[currentIndex]),
       bottomNavigationBar: BottomNavigationBar(
@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  List<Widget> _getAppBarActions(int index) {
+  List<Widget> getAppBarActions(int index) {
     // You can customize actions for different screens here
     switch (index) {
       case 0: // Home

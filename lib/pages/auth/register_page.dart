@@ -11,7 +11,7 @@ import 'package:my_blog_app/services/user_service.dart';
 
 class RegisterPage extends StatefulWidget{
   final Function()? onTap;
-  RegisterPage({super.key, required this.onTap});
+  const RegisterPage({super.key, required this.onTap});
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
@@ -98,10 +98,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( // everything in the page is under scaffold in general
+    return Scaffold(
+      // everything in the page is under scaffold in general
       // it is a foundational structure or pre-built framework
       backgroundColor: Color(0xFFE8E8DC),
-      body: SafeArea(    // the place where the interactive UI elements are placed
+      body: SafeArea(
+        // the place where the interactive UI elements are placed
         child: SingleChildScrollView(
           child: Center(
             child: Column(
@@ -191,7 +193,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 20),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center, // to get it at the center
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  // to get it at the center
                   // google + facebook sign in buttons
                   children: [
                     HariSquaretitle(

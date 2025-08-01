@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_blog_app/services/user_service.dart';
 
 class FollowButton extends StatefulWidget {
   final String authorId;
 
-  const FollowButton({Key? key, required this.authorId}) : super(key: key);
+  const FollowButton({super.key, required this.authorId});
 
   @override
   State<FollowButton> createState() => _FollowButtonState();
@@ -24,12 +23,22 @@ class _FollowButtonState extends State<FollowButton> {
   }
 
   Future<void> checkFollowingStatus() async {
-    final followingUIDs = await UserService().getFollowingUIDs();
-    setState(() {
-      isFollowing = followingUIDs.contains(widget.authorId);
-      isLoading = false;
-    });
+    final currentUserId = FirebaseAuth.instance.currentUser!.uid;
+    final userModel = await UserService().getUserProfileOnce(currentUserId);
+
+    if (userModel != null) {
+      setState(() {
+        isFollowing = userModel.following.contains(widget.authorId);
+        isLoading = false;
+      });
+    } else {
+      setState(() {
+        isFollowing = false;
+        isLoading = false;
+      });
+    }
   }
+
 
   Future<void> toggleFollow() async {
     setState(() {
@@ -65,3 +74,14 @@ class _FollowButtonState extends State<FollowButton> {
     );
   }
 }
+
+
+/*Future<void> checkFollowingStatus() async {
+    final followingUIDs = await UserService().getFollowingUIDs();
+    setState(() {
+      isFollowing = followingUIDs.contains(widget.authorId);
+
+      isLoading = false;
+    });
+  }
+   */

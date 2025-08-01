@@ -5,11 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_blog_app/models/blog_model.dart';
 import 'package:my_blog_app/services/blog_service.dart';
+import 'package:my_blog_app/services/user_service.dart';
 
 
 
 class CreateBlogScreen extends StatefulWidget {
-  const CreateBlogScreen({Key? key}) : super(key: key);
+  const CreateBlogScreen({super.key});
 
   @override
   _CreateBlogScreenState createState() => _CreateBlogScreenState();
@@ -49,17 +50,20 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
 
     try {
       final uid = FirebaseAuth.instance.currentUser!.uid;
-      final userDoc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
-      final userData = userDoc.data();
+      // final userDoc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      // final userData = userDoc.data();
 
-      if (userData == null) {
+      final user = await UserService().getUserProfileOnce(uid);
+
+      if (user == null) {
         Fluttertoast.showToast(msg: "User profile not found.");
         return;
       }
 
       final blogData = {
-        'authorName': userData['username'] ?? 'Anonymous',
-        'authorProfilePic': userData['profilePicUrl'] ?? '',
+        // 'authorName': userData['username'] ?? 'Anonymous',
+        'authorName': user.username ?? 'Anonymous',
+        'authorProfilePic': user.profilePicUrl ?? '',
         'title': titleController.text.trim(),
         'content': contentController.text.trim(),
         'category': selectedCategory,
@@ -78,7 +82,9 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
+
       Navigator.of(context).popUntil((route) => route.isFirst);
+
     } catch (e) {
       Fluttertoast.showToast(
         msg: "Error uploading blog: $e",
@@ -92,6 +98,7 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
   }
 
 
+  // Insert markdown syntax to selected text
   void insertMarkdown(String syntax) {
     final text = contentController.text;
     final selection = contentController.selection;
@@ -106,13 +113,17 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
     );
   }
 
+  // Variable to hold selected text color (not actually applied visually)
   Color selectedTextColor = Colors.white;
+
+  // Apply a selected color (not currently rendered in content)
   void applyColorToSelectedText(Color color) {
     setState(() {
       selectedTextColor = color;
     });
   }
 
+  // Returns a colored circular UI element for color picker
   Widget colorCircle(Color color) {
     return Container(
       width: 24,
@@ -120,7 +131,6 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
       decoration: BoxDecoration(color: color, shape: BoxShape.circle),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -185,7 +195,7 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
                               children: [
                                 Icon(_categoryIcons[category], size: 20, color: Colors.grey[700]),
                                 const SizedBox(width: 6),
-                                Text(category[0].toUpperCase() + category.substring(1)),
+                                Text(category[0].toUpperCase() + category.substring(1)), // What is this ?
                               ],
                             ),
                           );
@@ -211,7 +221,7 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
               const SizedBox(height: 160),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                margin: const EdgeInsets.only(top: 12),
+                margin: const EdgeInsets.only(top: 20),
                 decoration: BoxDecoration(
                   color: Colors.grey[900],
                   borderRadius: BorderRadius.circular(24),
@@ -228,22 +238,22 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
                         if (value == 'Heading') insertMarkdown('# ');
                       },
                       itemBuilder: (context) => const [
-                        PopupMenuItem(child: Text('Bold'), value: 'Bold'),
-                        PopupMenuItem(child: Text('Italic'), value: 'Italic'),
-                        PopupMenuItem(child: Text('Code'), value: 'Code'),
-                        PopupMenuItem(child: Text('Heading'), value: 'Heading'),
+                        PopupMenuItem(value: 'Bold', child: Text('Bold')),
+                        PopupMenuItem(value: 'Italic', child: Text('Italic')),
+                        PopupMenuItem(value: 'Code', child: Text('Code')),
+                        PopupMenuItem(value: 'Heading', child: Text('Heading')),
                       ],
                     ),
                     PopupMenuButton<Color>(
                       icon: const Icon(Icons.color_lens, color: Colors.white),
                       onSelected: applyColorToSelectedText,
                       itemBuilder: (context) => [
-                        PopupMenuItem(child: colorCircle(Colors.white), value: Colors.white),
-                        PopupMenuItem(child: colorCircle(Colors.black), value: Colors.black),
-                        PopupMenuItem(child: colorCircle(Colors.red.shade800), value: Colors.red.shade800),
-                        PopupMenuItem(child: colorCircle(Colors.green.shade100), value: Colors.green.shade100),
-                        PopupMenuItem(child: colorCircle(Colors.blue.shade800), value: Colors.blue.shade800),
-                        PopupMenuItem(child: colorCircle(Colors.purple), value: Colors.purple),
+                        PopupMenuItem(value: Colors.white, child: colorCircle(Colors.white)),
+                        PopupMenuItem(value: Colors.black, child: colorCircle(Colors.black)),
+                        PopupMenuItem(value: Colors.red.shade800, child: colorCircle(Colors.red.shade800)),
+                        PopupMenuItem(value: Colors.green.shade100, child: colorCircle(Colors.green.shade100)),
+                        PopupMenuItem(value: Colors.blue.shade800, child: colorCircle(Colors.blue.shade800)),
+                        PopupMenuItem(value: Colors.purple, child: colorCircle(Colors.purple)),
                       ],
                     ),
                     IconButton(icon: const Icon(Icons.camera_alt, color: Colors.white), onPressed: () {}),

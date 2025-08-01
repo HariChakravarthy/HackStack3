@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_blog_app/models/blog_model.dart';
 import 'package:my_blog_app/services/blog_service.dart';
 
@@ -8,7 +8,7 @@ import 'package:my_blog_app/services/blog_service.dart';
 class EditBlogScreen extends StatefulWidget {
   final BlogModel existingBlog;
 
-  const EditBlogScreen({Key? key, required this.existingBlog}) : super(key: key);
+  const EditBlogScreen({super.key, required this.existingBlog});
 
   @override
   _EditBlogScreenState createState() => _EditBlogScreenState();
@@ -39,7 +39,6 @@ class _EditBlogScreenState extends State<EditBlogScreen> {
     super.initState();
     titleController = TextEditingController(text: widget.existingBlog.title);
     contentController = TextEditingController(text: widget.existingBlog.content);
-
 
     selectedCategory = categories.contains(widget.existingBlog.category)
         ? widget.existingBlog.category
@@ -193,22 +192,22 @@ class _EditBlogScreenState extends State<EditBlogScreen> {
                         if (value == 'Heading') insertMarkdown('# ');
                       },
                       itemBuilder: (context) => const [
-                        PopupMenuItem(child: Text('Bold'), value: 'Bold'),
-                        PopupMenuItem(child: Text('Italic'), value: 'Italic'),
-                        PopupMenuItem(child: Text('Code'), value: 'Code'),
-                        PopupMenuItem(child: Text('Heading'), value: 'Heading'),
+                        PopupMenuItem(value: 'Bold', child: Text('Bold')),
+                        PopupMenuItem(value: 'Italic', child: Text('Italic')),
+                        PopupMenuItem(value: 'Code', child: Text('Code')),
+                        PopupMenuItem(value: 'Heading', child: Text('Heading')),
                       ],
                     ),
                     PopupMenuButton<Color>(
                       icon: const Icon(Icons.color_lens, color: Colors.white),
                       onSelected: applyColorToSelectedText,
                       itemBuilder: (context) => [
-                        PopupMenuItem(child: colorCircle(Colors.white), value: Colors.white),
-                        PopupMenuItem(child: colorCircle(Colors.black), value: Colors.black),
-                        PopupMenuItem(child: colorCircle(Colors.red.shade800), value: Colors.red.shade800),
-                        PopupMenuItem(child: colorCircle(Colors.green.shade100), value: Colors.green.shade100),
-                        PopupMenuItem(child: colorCircle(Colors.blue.shade800), value: Colors.blue.shade800),
-                        PopupMenuItem(child: colorCircle(Colors.purple), value: Colors.purple),
+                        PopupMenuItem(value: Colors.white, child: colorCircle(Colors.white)),
+                        PopupMenuItem(value: Colors.black, child: colorCircle(Colors.black)),
+                        PopupMenuItem(value: Colors.red.shade800, child: colorCircle(Colors.red.shade800)),
+                        PopupMenuItem(value: Colors.green.shade100, child: colorCircle(Colors.green.shade100)),
+                        PopupMenuItem(value: Colors.blue.shade800, child: colorCircle(Colors.blue.shade800)),
+                        PopupMenuItem(value: Colors.purple, child: colorCircle(Colors.purple)),
                       ],
                     ),
                     IconButton(icon: const Icon(Icons.camera_alt, color: Colors.white), onPressed: () {}),
